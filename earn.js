@@ -15,7 +15,7 @@ function createSocket(url, exchange, onmessage) {
 }
 
 function writeSummary(snapshots) {
-  readline.moveCursor(process.stdout, 0, -2);
+  readline.moveCursor(process.stdout, -100, -2);
   readline.clearScreenDown();
 
   const getAverage = numberOfSnapshots => {
@@ -33,8 +33,8 @@ function writeSummary(snapshots) {
   const hour = getAverage(12);
 
   const text = chalk` 5 minutes: {yellow ${parseFloat(five.toFixed(4))} }
-${fifteen > 0 ? chalk`15 minutes: {yellow ${parseFloat(fifteen.toFixed(4))} }` : ''}
-${hour > 0 ? chalk`    1 hour: {yellow ${parseFloat(hour.toFixed(4))} }`: ''}`;
+15 minutes: ${fifteen > 0 ? chalk`{yellow ${parseFloat(fifteen.toFixed(4))} }` : ''}
+    1 hour: ${hour > 0 ? chalk`{yellow ${parseFloat(hour.toFixed(4))} }`: ''}`;
 
   process.stdout.write(text);
 
@@ -46,9 +46,9 @@ ${hour > 0 ? chalk`    1 hour: {yellow ${parseFloat(hour.toFixed(4))} }`: ''}`;
   // minutely, 5 minutes, hourly, 12 hours, 24 hours
 }
 
-function wait(seconds) {
+function wait(minutes) {
   return new Promise(resolve => {
-    setTimeout(resolve, seconds * 1000);
+    setTimeout(resolve, minutes * 36000);
   });
 }
 
@@ -95,7 +95,7 @@ async function main() {
 
   const snapshots = [];
   while(true) {
-    if(snapshots.length === 0) console.log('Connecting...\n')
+    if(snapshots.length === 0) console.log('Averaging...\n')
     currentSnapshot = new Snapshot(duration);
     await wait(duration);
     if(currentSnapshot.averagePrice === 0) continue;
