@@ -1,0 +1,9 @@
+given current price
+if sell at current price
+how low before buy to ensure % gain in btc
+
+starting:
+amount of btc
+current price
+desired % increase in btc
+factor in fees (0.2% of average price)
